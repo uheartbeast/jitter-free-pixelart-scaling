@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://dqubrookijjma"]
 
 [ext_resource type="Script" path="res://World.gd" id="1"]
-[ext_resource type="Material" path="res://JitterFreePixelArt.tres" id="2"]
+[ext_resource type="Material" uid="uid://dnunhj1748kv" path="res://JitterFreePixelArt.tres" id="2"]
 [ext_resource type="Texture2D" uid="uid://c833o4psu8bb2" path="res://TownLeft.png" id="3"]
 [ext_resource type="Texture2D" uid="uid://dc17t2u50khsk" path="res://TownRight.png" id="4"]
 

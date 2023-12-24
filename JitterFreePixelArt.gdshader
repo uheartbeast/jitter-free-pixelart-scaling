@@ -1,17 +1,18 @@
 shader_type canvas_item;
+render_mode unshaded;
 
-vec4 texturePointSmooth(sampler2D tex, vec2 uv) {
-	vec2 size = vec2(textureSize(tex, 0));
-	vec2 pixel = vec2(1.0) / size;
-	uv -= pixel * vec2(0.5);
-	vec2 uv_pixels = uv * size;
-	vec2 delta_pixel = fract(uv_pixels) - vec2(0.5);
-	vec2 ddxy = fwidth(uv_pixels);
-	vec2 mip = log2(ddxy) - 0.5;
-	return textureLod(tex, uv + (clamp(delta_pixel / ddxy, 0.0, 1.0) - delta_pixel) * pixel, min(mip.x, mip.y));
+vec4 texturePointSmooth(sampler2D tex, vec2 uv, vec2 pixel_size) {
+	vec2 ddx = dFdx(uv);
+	vec2 ddy = dFdy(uv);
+	vec2 lxy = sqrt(ddx * ddx + ddy * ddy);
+	vec2 uv_pixels = uv / pixel_size;
+	vec2 delta_pixel = round(uv_pixels) - vec2(0.5f);
+	vec2 uv_dxy_pixels = uv_pixels - delta_pixel;
+	uv_dxy_pixels = clamp((uv_dxy_pixels - vec2(0.5f)) * pixel_size / lxy + vec2(0.5f), 0.0f, 1.0f);
+	uv = delta_pixel * pixel_size;
+	return textureGrad(tex, uv + uv_dxy_pixels * pixel_size, ddx, ddy);
 }
 
 void fragment() {
-	vec4 Texture = texturePointSmooth(TEXTURE, UV);
-	COLOR = Texture.rgba;
+	COLOR = texturePointSmooth(TEXTURE, UV, TEXTURE_PIXEL_SIZE);
 }
