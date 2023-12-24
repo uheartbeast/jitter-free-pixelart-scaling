@@ -6,27 +6,24 @@
 ;   [section] ; section goes between []
 ;   param=value ; assign values to parameters
 
-config_version=4
-
-_global_script_classes=[  ]
-_global_script_class_icons={
-
-}
+config_version=5
 
 [application]
 
 config/name="Jitter-free Pixel Scaling"
 run/main_scene="res://World.tscn"
+config/features=PackedStringArray("4.2")
 config/icon="res://icon.png"
 
 [display]
 
-window/size/width=240
-window/size/height=140
-window/size/test_width=1200
-window/size/test_height=700
-window/stretch/mode="2d"
+window/size/viewport_width=240
+window/size/viewport_height=140
+window/size/window_width_override=1200
+window/size/window_height_override=700
+window/stretch/mode="canvas_items"
+window/stretch/aspect="ignore"
 
 [rendering]
 
-environment/default_environment="res://default_env.tres"
+environment/defaults/default_environment="res://default_env.tres"

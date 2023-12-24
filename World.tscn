@@ -1,67 +1,73 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=3 uid="uid://dqubrookijjma"]
 
-[ext_resource path="res://World.gd" type="Script" id=1]
-[ext_resource path="res://JitterFreePixelArt.tres" type="Material" id=2]
-[ext_resource path="res://TownLeft.png" type="Texture" id=3]
-[ext_resource path="res://TownRight.png" type="Texture" id=4]
+[ext_resource type="Script" path="res://World.gd" id="1"]
+[ext_resource type="Material" uid="uid://dnunhj1748kv" path="res://JitterFreePixelArt.tres" id="2"]
+[ext_resource type="Texture2D" uid="uid://c833o4psu8bb2" path="res://TownLeft.png" id="3"]
+[ext_resource type="Texture2D" uid="uid://dc17t2u50khsk" path="res://TownRight.png" id="4"]
 
-[sub_resource type="Animation" id=1]
+[sub_resource type="Animation" id="1"]
 resource_name = "Zooming"
-length = 2.0
-loop = true
+length = 8.0
+loop_mode = 1
 tracks/0/type = "value"
-tracks/0/path = NodePath("Camera:zoom")
-tracks/0/interp = 2
-tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
+tracks/0/path = NodePath("Camera3D:zoom")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 1 ),
-"transitions": PoolRealArray( 1, 1 ),
+"times": PackedFloat32Array(0, 4),
+"transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [ Vector2( 1, 1 ), Vector2( 1, 1 ) ]
+"values": [Vector2(1, 1), Vector2(1.25, 1.25)]
 }
 tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = false
 tracks/1/path = NodePath("TownLeft:scale")
 tracks/1/interp = 2
 tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 1 ),
-"transitions": PoolRealArray( 1, 1 ),
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [ Vector2( 1, 1 ), Vector2( 1, 0.5 ) ]
+"values": [Vector2(1, 1), Vector2(1, 0.5)]
 }
 tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = false
 tracks/2/path = NodePath("TownRight:scale")
 tracks/2/interp = 2
 tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
 tracks/2/keys = {
-"times": PoolRealArray( 0, 1 ),
-"transitions": PoolRealArray( 1, 1 ),
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [ Vector2( 1, 1 ), Vector2( 1, 0.5 ) ]
+"values": [Vector2(1, 1), Vector2(1, 0.5)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_m8js5"]
+_data = {
+"Zooming": SubResource("1")
 }
 
 [node name="World" type="Node2D"]
-script = ExtResource( 1 )
+script = ExtResource("1")
 
-[node name="TownLeft" type="Sprite" parent="."]
-material = ExtResource( 2 )
-position = Vector2( 60, 70 )
-texture = ExtResource( 3 )
+[node name="TownLeft" type="Sprite2D" parent="."]
+material = ExtResource("2")
+position = Vector2(60, 70)
+texture = ExtResource("3")
 
-[node name="TownRight" type="Sprite" parent="."]
-position = Vector2( 180, 70 )
-texture = ExtResource( 4 )
+[node name="TownRight" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(180, 70)
+texture = ExtResource("4")
 
-[node name="Camera" type="Camera2D" parent="."]
-offset = Vector2( 120, 70 )
-current = true
+[node name="Camera3D" type="Camera2D" parent="."]
+offset = Vector2(120, 70)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-playback_speed = 0.25
-anims/Zooming = SubResource( 1 )
+libraries = {
+"": SubResource("AnimationLibrary_m8js5")
+}
